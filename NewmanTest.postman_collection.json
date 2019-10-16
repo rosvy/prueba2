@@ -1,0 +1,6256 @@
+{
+	"info": {
+		"_postman_id": "182b44f6-6cd8-4231-8857-ffbdabaf3cfd",
+		"name": "NewmanTest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear  Contrato",
+			"item": [
+				{
+					"name": "Create Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2452c91c-8efc-4821-9893-be379d26b00e",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"lrm-jwt\", jsonData.accessToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"cc6b68186bc84e40a68b76029dfc77ba\",\r\n  \"user\": \"{{user}}\",\r\n  \"password\": \"6bm$tAge\"\r\n}"
+						},
+						"url": {
+							"raw": "https://auth.gbm.com/api/v1/session/user",
+							"protocol": "https",
+							"host": [
+								"auth",
+								"gbm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"session",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Party Add Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d92cb44-3181-4a7e-a85a-fca8dddc7d05",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"party-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "{{organization-id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_of_birth\": \"MEX\",\r\n  \"date_of_birth\": \"{{fecha}}\",\r\n    \"first_name\": \"{{nombre}}\" ,\r\n  \"gender\": \"MALE\",\r\n  \"identifier\": {\r\n    \"identifier_type_id\": \"f6535bfb-68c3-4368-8a21-8edc4fc77484\",\r\n    \"value\": \"{{registrocurp}}\"\r\n  },\r\n  \"immigration_status\": \"NonImmigrant\",\r\n  \"marital_status\": \"MARRIED\",\r\n  \"first_last_name\": \"{{firstlastname}}\",\r\n \"second_last_name\": \"{{secondtlastname2}}\",\r\n  \"state_of_birth\": \"DD0E3953-518C-4323-89E0-4222451F2D3E\"\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Nationality",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"nationality\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Residence",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"residence\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Citizenship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"citizenship\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of tributacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"TAXATION\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Residential_Fiscal Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b033ba2e-70a2-4cbb-995a-d465c9758b03",
+								"exec": [
+									"pm.test(\"Status code is 21\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "{{organization-id}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address_type\": \"RESIDENTIAL_AND_FISCAL\",\n  \"inside_number\": \"1234567891011\",\n  \"outside_number\": \"31\",\n  \"street_name\": \"Revolucion\",\n  \"zip_location_id\": \"{{zipcodeid}}\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email personal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": true,\r\n    \"value\": \"{{user}}\",\r\n     \"virtual_address_type\": \"email_personal\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"{{user}}\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Telephone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8850bf0-421e-4b07-90a6-37d2bded0add",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"telephone-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"area_code\": \"722\",\r\n  \"country_code\": \"MEX\",\r\n  \"extension\": \"4813\",\r\n  \"telephone_type\": \"office\",\r\n  \"value\": \"12345678\"\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/telephones",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"telephones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add RFC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "200e65e3-b179-449f-8553-71df8808c3c1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier_type_id\": \"339fc0e9-710f-4f62-9559-1c63730ae2e3\",\n\t\"value\": \"{{registrorfc}}\"\n}\n\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/identifiers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"identifiers"
+							]
+						},
+						"description": "Add a new identifier to party"
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/{partyId}/questionnaire-answers KYC Depositos Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"E9B0BB6E-859E-4857-9EE0-1F6ECE4F5312\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\":\"CLIENT_KYC\",\r\n        \"questionnaire_answers\":[\r\n{\r\n  \"question_id\":\"93a2f5c1-96eb-4a7f-8aac-4ed47ed01634\",\r\n  \"answer_id\":\"{{kyc}}\",\r\n  \"answer_response\":null\r\n},\r\n{\r\n  \"question_id\":\"c615ca6d-20c3-4f39-aed6-025f4bf6a168\",\r\n  \"answer_id\":\"{{kyc2}}\",\r\n  \"answer_response\":null\r\n}\r\n]\r\n}\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/{partyId}/questionnaire-answers Activity Economic Otros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"b78a2c6b-d644-400b-8237-3c857b7f77d8\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\": \"CLIENT_ECONOMIC_ACTIVITY\",\r\n        \"questionnaire_answers\": [\r\n        \t   {\r\n            \t\"answer_type\": \"text_box\",\r\n               \t\"question_id\" : \"0B7D1318-B84C-4C4E-9C88-0D0D8ED1DBAF\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"{{MontoMensual}}\"\r\n            },\r\n            {\t\r\n            \t\"required\": true,\r\n                \"answer_type\": \"combo\",\r\n                \"question_id\" : \"01D60C98-D2F3-4BDE-88A6-B259A19303EE\",\r\n                \"answer_id\": \"64961517-7A9F-486B-8ABC-0BC5DF0B4505\",\r\n                \"answer_response\" : \"Empleado\"\r\n            },\r\n            {\r\n            \r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n            \t\"question_id\" :\"1AB52A35-7658-41A0-93D0-A7D54113B402\" ,\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"Sin City\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"combo\",\r\n            \t\"question_id\" :\"EF148196-FA55-49B8-B85D-959C8512F614\" ,\r\n                \"answer_id\": \"{{sector}}\",\r\n                \"answer_response\" : \"{{respsector}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"combo\",\r\n               \t\"question_id\" : \"DE6BFA26-E890-4617-BC82-2897EA6A1F2F\",\r\n                \"answer_id\": \"{{giro}}\",\r\n                \"answer_response\" : \"{{respgiro}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"multiple_option\",\r\n               \t\"question_id\" : \"30D02E24-81D8-474F-B716-777E26D5E75B\",\r\n                \"answer_id\": \"{{rango}}\",\r\n                \"answer_response\" : \"{{resprango}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"text_box\",\r\n               \t\"question_id\" : \"261F62BD-2217-46C8-877E-5699793636E8\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"2\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"multiple_option\",\r\n               \t\"question_id\" : \"51C90DF0-3C92-41B0-9FAA-B2185D94687D\",\r\n                \"answer_id\": \"0F00E36D-AE65-4438-9140-42C6B4B99EF7\",\r\n                \"answer_response\" : \"Arrendamiento de inmuebles\"\r\n            },\r\n            {\r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n\t\t\t\t\"question_id\": \"9A7C4DCF-DF53-4B67-A353-0DA6E1FF8F5D\",\r\n\t\t\t\t\"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n\t\t\t\t\"answer_response\" : \"Pruebas\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n\t\t\t\t\"question_id\": \"9A7C4DCF-DF53-4B67-A353-0DA6E1FF8F5D\",\r\n\t\t\t\t\"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n\t\t\t\t\"answer_response\" : \"Prueba\"\r\n\t}\r\n\t\t\t]\r\n    }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/{partyId}/questionnaire-answers PEPS Yo Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"9F62D213-981A-4705-8F4A-84207084A3AB\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\": \"CLIENT_PEPS\",\r\n        \"questionnaire_answers\": [\r\n            {\r\n            \t\"required\": true,\r\n\t\t\t\t\"answer_type\": \"combo\",\r\n                \"question_id\" : \"602A0966-90EC-45E6-B46E-8805D258D8B6\",\r\n                \"answer_id\": \"FEFF7411-7154-4D60-AF1D-AB414EF54853\",\r\n                \"answer_response\" : \"Yo\"\r\n\t\t\t},\r\n            {\r\n            \t\"question_id\" : \"0741AA44-7AE6-470F-B56E-C88D104EB38F\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_type\": \"text_box\",\r\n                \"answer_response\" : \"La Coqueta\"\r\n            },\r\n            {\r\n            \t\"question_id\" : \"53BAB321-21FF-47FC-A7C6-1761A714E05E\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_type\": \"text_box\",\r\n                \"answer_response\" : \"Director De Asuntos Irrelevantes\"\r\n            }\r\n              \r\n\t\t\t]\r\n    }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile-type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b88910f3-1cde-461d-8ed8-bc70ba17c97f",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"profile_type\": \"LOW\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal/{{party-id}}/profile-types",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal",
+								"{{party-id}}",
+								"profile-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f1f2880-3026-4306-98a2-7fbe6c392486",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"contract-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\topening_platform_type_key: \"gbmcom\",\n\tcontract_template_key: \"gbmcom\",\n\tparty_id: \"{{party-id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- Trading",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"stage 1\", \n\t\"management_type_id\": \"9E95828E-7116-46EF-9102-87213947DD03\", \n\t\"management_type_template_key\": \"wealth\", \n\t\"opening_platform_type_key\": \"gbmcom\", \n\t\"account_profile_type\": \"growth\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Firmar Contrato",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/sign",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"sign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send to HB Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts/{{account-id}}/base-platform",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts",
+								"{{account-id}}",
+								"base-platform"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Party",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d561c127-7401-4972-b01e-73bc716d23ba",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"party-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/users/party",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"users",
+								"party"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Validaciones de Virtual Address",
+			"item": [
+				{
+					"name": "Create Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2452c91c-8efc-4821-9893-be379d26b00e",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"lrm-jwt\", jsonData.accessToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"cc6b68186bc84e40a68b76029dfc77ba\",\r\n  \"user\": \"{{user}}\",\r\n  \"password\": \"6bm$tAge\"\r\n}"
+						},
+						"url": {
+							"raw": "https://auth.gbm.com/api/v1/session/user",
+							"protocol": "https",
+							"host": [
+								"auth",
+								"gbm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"session",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Party",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d561c127-7401-4972-b01e-73bc716d23ba",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"party-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/users/party",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"users",
+								"party"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetContract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b30b6a6-a4e4-4d8e-b3c8-6d004eae71fe",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"contract-id\", jsonData[0].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/users/contracts/opening-platforms/gbmcom",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"users",
+								"contracts",
+								"opening-platforms",
+								"gbmcom"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email - jmzamudio@gbm@com.mx",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jtest@gbm@com.mx for virtual address type Office failed the format validation\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jtest@gbm@com.mx\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio@gbm.com.mx.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"BadFormat\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jtest@gbm@com.mx. for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jtest@gbm@com.mx.\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email - @",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"",
+									"pm.test(\"BadFormat- @\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value @ for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"@\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio@gbm.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@gbm. for virtual address type Office failed the format validation.].\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@gbm.\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -@gbm.com.mx",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat-  @gbm.com.mx\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value @gbm.com.mx for virtual address type Office failed the format validation.].\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"@gbm.com.mx\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio gbm.com.mx",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat-  jmzamudio gbm.com.mx \", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio gbm.com.mx for virtual address type Office failed the format validation.].\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio gbm.com.mx\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio@",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat-  jmzamudio@ \", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@ for virtual address type Office failed the format validation.].\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio@gbm",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio@gbm\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@gbm for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@gbm\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email-jmzamudio @gbm.com.mx",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio @gbm.com.mx\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio @gbm.com.mx for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio @gbm.com.mx\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email-jmzamudio@ gbm.com.mx",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio@ gbm.com.mx\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@ gbm.com.mx for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@ gbm.com.mx\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email-jmzamudio@gbm.com.$",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio@gbm.com.$\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@gbm.com.$ for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@gbm.com.$\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio@gbm.c&m",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio@gbm.c&m\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@gbm.c&m for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@gbm.c&m\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio&@gbm.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio&@gbm.com\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio&@gbm.com for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio&@gbm.com\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio@gbm.c0m",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio@gbm.c0m\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@gbm.c0m for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@gbm.c0m\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -jmzamudio@gbm.com.mx.lorena",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- jmzamudio@gbm.com.mx.lorena\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jmzamudio@gbm.com.mx.lorena for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jmzamudio@gbm.com.mx.lorena\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -5465445",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat- 5465445\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value 5465445 for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"5465445\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email -",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"pm.test(\"The value field is required.- value\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Invalid values when trying to add a virtual address.\");",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \" \",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email - pruebas:loerwem@gbm.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 422\", function () {",
+									"    pm.response.to.have.status(422);",
+									"});",
+									"",
+									"",
+									"pm.test(\"BadFormat-pruebas:loerwem@gbm.com\", function () {",
+									"    pm.expect(pm.response.text()).to.include(\"Value jpruebas:loerwem@gbm.com for virtual address type Office failed the format validation.\");",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"jpruebas:loerwem@gbm.com\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Update Perfil Cliente_Cuenta",
+			"item": [
+				{
+					"name": "Create Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2452c91c-8efc-4821-9893-be379d26b00e",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"lrm-jwt\", jsonData.accessToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"cc6b68186bc84e40a68b76029dfc77ba\",\r\n  \"user\": \"{{user}}\",\r\n  \"password\": \"6bm$tAge\"\r\n}"
+						},
+						"url": {
+							"raw": "https://origin.auth.gbmapi.com/v1/session/user",
+							"protocol": "https",
+							"host": [
+								"origin",
+								"auth",
+								"gbmapi",
+								"com"
+							],
+							"path": [
+								"v1",
+								"session",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Party Add Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d92cb44-3181-4a7e-a85a-fca8dddc7d05",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"party-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "{{organization-id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_of_birth\": \"MEX\",\r\n  \"date_of_birth\": \"{{fecha}}\",\r\n    \"first_name\": \"{{nombre}}\" ,\r\n  \"gender\": \"MALE\",\r\n  \"identifier\": {\r\n    \"identifier_type_id\": \"f6535bfb-68c3-4368-8a21-8edc4fc77484\",\r\n    \"value\": \"{{registrocurp}}\"\r\n  },\r\n  \"immigration_status\": \"NonImmigrant\",\r\n  \"marital_status\": \"MARRIED\",\r\n  \"first_last_name\": \"{{firstlastname}}\",\r\n \"second_last_name\": \"{{secondtlastname2}}\",\r\n  \"state_of_birth\": \"DD0E3953-518C-4323-89E0-4222451F2D3E\"\r\n  }"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile-type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b88910f3-1cde-461d-8ed8-bc70ba17c97f",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"profile_type\": \"LOW\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal/{{party-id}}/profile-types",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal",
+								"{{party-id}}",
+								"profile-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Nationality",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"nationality\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Residence",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"residence\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Residential Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8b3ab55b-8c88-4128-9707-900b95d96832",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"value": "{{organization-id}}",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address_type\": \"residential\",\n  \"inside_number\": \"1234567891011121314151212\",\n  \"outside_number\": \"31\",\n  \"street_name\": \"Calle insurgentes Sur\",\n  \"zip_location_id\": \"{{zipcodeid}}\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Citizenship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"citizenship\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of tributacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"TAXATION\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Residential_Fiscal Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b033ba2e-70a2-4cbb-995a-d465c9758b03",
+								"exec": [
+									"pm.test(\"Status code is 21\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "{{organization-id}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address_type\": \"RESIDENTIAL_AND_FISCAL\",\n  \"inside_number\": \"1234567891011\",\n  \"outside_number\": \"31\",\n  \"street_name\": \"Revolucion\",\n  \"zip_location_id\": \"{{zipcodeid}}\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email personal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": true,\r\n    \"value\": \"{{user}}\",\r\n     \"virtual_address_type\": \"email_personal\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Telephone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8850bf0-421e-4b07-90a6-37d2bded0add",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"telephone-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"area_code\": \"722\",\r\n  \"country_code\": \"MEX\",\r\n  \"extension\": \"4813\",\r\n  \"telephone_type\": \"office\",\r\n  \"value\": \"12345678\"\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/telephones",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"telephones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add RFC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "200e65e3-b179-449f-8553-71df8808c3c1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier_type_id\": \"339fc0e9-710f-4f62-9559-1c63730ae2e3\",\n\t\"value\": \"{{registrorfc}}\"\n}\n\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/identifiers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"identifiers"
+							]
+						},
+						"description": "Add a new identifier to party"
+					},
+					"response": []
+				},
+				{
+					"name": "KYC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"E9B0BB6E-859E-4857-9EE0-1F6ECE4F5312\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\":\"CLIENT_KYC\",\r\n        \"questionnaire_answers\":[\r\n{\r\n  \"question_id\":\"93a2f5c1-96eb-4a7f-8aac-4ed47ed01634\",\r\n  \"answer_id\":\"{{kyc}}\",\r\n  \"answer_response\":null\r\n},\r\n{\r\n  \"question_id\":\"c615ca6d-20c3-4f39-aed6-025f4bf6a168\",\r\n  \"answer_id\":\"{{kyc2}}\",\r\n  \"answer_response\":null\r\n}\r\n]\r\n}\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activity Economic Otros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"b78a2c6b-d644-400b-8237-3c857b7f77d8\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\": \"CLIENT_ECONOMIC_ACTIVITY\",\r\n        \"questionnaire_answers\": [\r\n        \t   {\r\n            \t\"answer_type\": \"text_box\",\r\n               \t\"question_id\" : \"0B7D1318-B84C-4C4E-9C88-0D0D8ED1DBAF\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"{{MontoMensual}}\"\r\n            },\r\n            {\t\r\n            \t\"required\": true,\r\n                \"answer_type\": \"combo\",\r\n                \"question_id\" : \"01D60C98-D2F3-4BDE-88A6-B259A19303EE\",\r\n                \"answer_id\": \"64961517-7A9F-486B-8ABC-0BC5DF0B4505\",\r\n                \"answer_response\" : \"Empleado\"\r\n            },\r\n            {\r\n            \r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n            \t\"question_id\" :\"1AB52A35-7658-41A0-93D0-A7D54113B402\" ,\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"Sin City\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"combo\",\r\n            \t\"question_id\" :\"EF148196-FA55-49B8-B85D-959C8512F614\" ,\r\n                \"answer_id\": \"{{sector}}\",\r\n                \"answer_response\" : \"{{respsector}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"combo\",\r\n               \t\"question_id\" : \"DE6BFA26-E890-4617-BC82-2897EA6A1F2F\",\r\n                \"answer_id\": \"{{giro}}\",\r\n                \"answer_response\" : \"{{respgiro}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"multiple_option\",\r\n               \t\"question_id\" : \"30D02E24-81D8-474F-B716-777E26D5E75B\",\r\n                \"answer_id\": \"{{rango}}\",\r\n                \"answer_response\" : \"{{resprango}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"text_box\",\r\n               \t\"question_id\" : \"261F62BD-2217-46C8-877E-5699793636E8\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"2\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"multiple_option\",\r\n               \t\"question_id\" : \"51C90DF0-3C92-41B0-9FAA-B2185D94687D\",\r\n                \"answer_id\": \"0F00E36D-AE65-4438-9140-42C6B4B99EF7\",\r\n                \"answer_response\" : \"Arrendamiento de inmuebles\"\r\n            },\r\n            {\r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n\t\t\t\t\"question_id\": \"9A7C4DCF-DF53-4B67-A353-0DA6E1FF8F5D\",\r\n\t\t\t\t\"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n\t\t\t\t\"answer_response\" : \"Pruebas\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n\t\t\t\t\"question_id\": \"9A7C4DCF-DF53-4B67-A353-0DA6E1FF8F5D\",\r\n\t\t\t\t\"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n\t\t\t\t\"answer_response\" : \"Prueba\"\r\n\t}\r\n\t\t\t]\r\n    }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activity Economic V2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"version\":\"2\",\n   \"questionnaire_type\":\"CLIENT_ECONOMIC_ACTIVITY\",\n   \"questionnaire_answers\":[\n      {\n         \"question_id\":\"0b7d1318-b84c-4c4e-9c88-0d0d8ed1dbaf\",\n         \"answer_id\":\"00000000-0000-0000-0000-000000000000\",\n         \"answer_response\":\"20000\"\n      },\n      {\n         \"question_id\":\"01d60c98-d2f3-4bde-88a6-b259a19303ee\",\n         \"answer_id\":\"64961517-7a9f-486b-8abc-0bc5df0b4505\",\n         \"answer_response\":null\n      },\n      {\n         \"question_id\":\"1ab52a35-7658-41a0-93d0-a7d54113b402\",\n         \"answer_id\":\"00000000-0000-0000-0000-000000000000\",\n         \"answer_response\":\"To learn more about character counting and calculating the length of your strings.\"\n      },\n      {\n         \"question_id\":\"ef148196-fa55-49b8-b85d-959c8512f614\",\n         \"answer_id\":\"103f1eef-b5b0-42be-9dc5-d2f8d49d197c\",\n         \"answer_response\":null\n      },\n      {\n         \"question_id\":\"de6bfa26-e890-4617-bc82-2897ea6a1f2f\",\n         \"answer_id\":\"96c0c21a-43ca-4aa8-8ea0-8aeb9ffe5e43\",\n         \"answer_response\":null\n      },\n      {\n         \"question_id\":\"30d02e24-81d8-474f-b716-777e26d5e75b\",\n         \"answer_id\":\"926b8bd0-d922-4709-ba82-dce244df2ec0\",\n         \"answer_response\":null\n      },\n      {\n         \"question_id\":\"261f62bd-2217-46c8-877e-5699793636e8\",\n         \"answer_id\":\"00000000-0000-0000-0000-000000000000\",\n         \"answer_response\":\"2009-12-11\"\n      }\n   ]\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PEPS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"9F62D213-981A-4705-8F4A-84207084A3AB\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\": \"CLIENT_PEPS\",\r\n        \"questionnaire_answers\": [\r\n            {\r\n            \t\"required\": true,\r\n\t\t\t\t\"answer_type\": \"combo\",\r\n                \"question_id\" : \"602A0966-90EC-45E6-B46E-8805D258D8B6\",\r\n                \"answer_id\": \"FEFF7411-7154-4D60-AF1D-AB414EF54853\",\r\n                \"answer_response\" : \"Yo\"\r\n\t\t\t},\r\n            {\r\n            \t\"question_id\" : \"0741AA44-7AE6-470F-B56E-C88D104EB38F\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_type\": \"text_box\",\r\n                \"answer_response\" : \"La Coqueta\"\r\n            },\r\n            {\r\n            \t\"question_id\" : \"53BAB321-21FF-47FC-A7C6-1761A714E05E\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_type\": \"text_box\",\r\n                \"answer_response\" : \"Director De Asuntos Irrelevantes\"\r\n            }\r\n              \r\n\t\t\t]\r\n    }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f1f2880-3026-4306-98a2-7fbe6c392486",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"contract-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\topening_platform_type_key: \"gbmcom\",\n\tcontract_template_key: \"gbmcom\",\n\tparty_id: \"{{party-id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- LIMITED_DISCRETIONARY_BY_PROFILE",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"C1\", \n\t\"management_type\": \"LIMITED_DISCRETIONARY_BY_PROFILE\", \n\t\"management_type_template\": \"wealth\", \n\t\"opening_platform\": \"gbmcom\", \n\t\"account_profile_type\": \"debt\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar perfil cuenta",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b88910f3-1cde-461d-8ed8-bc70ba17c97f",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"profile_type\": \"balance\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts/{{account-id}}/profiles",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts",
+								"{{account-id}}",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a9424379-7847-4316-9dbb-bbfb8648c3ed",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData[0].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts/",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Firmar Contrato",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/sign",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"sign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send to HB Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts/{{account-id}}/base-platform",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts",
+								"{{account-id}}",
+								"base-platform"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "catalogs",
+			"item": [
+				{
+					"name": "/catalogs/roles",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c4715353-2875-41f9-a11b-827bff8bbd19",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/roles",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/identifier-types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "06b2e0b1-2c4f-49e7-99bf-fe9b8d8e76be",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/identifier-types",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"identifier-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/virtual-address-types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d7971f1c-ed52-450c-92c9-2c514a1b4d4b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/virtual-address-types",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"virtual-address-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/management-types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "6749ae6c-b757-47fb-9f5e-ab7ed8cffae7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/management-types",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"management-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/management-types-template",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "76019a73-487b-4226-9adf-23e6e65d5a1d",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/management-types-template",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"management-types-template"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/countries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0fc6643b-1b38-4441-afb8-8e55f5298af5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"country-code\", \"MEX\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/countries/:country-code/states",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1e86c767-142f-4446-804c-d0bcd3e2bb51",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"state-id\", jsonData[9].id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/countries/MEX/states",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"countries",
+								"MEX",
+								"states"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/states/:state-id/townships",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b77d655b-29d9-4864-b16f-db74b978251e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"townships-id\", jsonData[0].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/states/f5ffed46-b3e9-4db2-9277-3cdcefc5f81a/townships",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"states",
+								"f5ffed46-b3e9-4db2-9277-3cdcefc5f81a",
+								"townships"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/states/:state-id/cities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8469517f-6142-47b7-ac75-276e6dab171e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"city-id\", jsonData[0].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/states/34f8653d-fb39-4232-ac4a-8bafe9265f4f/cities",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"states",
+								"34f8653d-fb39-4232-ac4a-8bafe9265f4f",
+								"cities"
+							]
+						},
+						"description": "Gets the cities of the requested state"
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/states/:state-id/cities version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8469517f-6142-47b7-ac75-276e6dab171e",
+								"exec": [
+									"pm.test(\"Status code is 403\", function () {",
+									"    pm.response.to.have.status(403);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/v.2.0/states/f5ffed46-b3e9-4db2-9277-3cdcefc5f81a/cities",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"v.2.0",
+								"states",
+								"f5ffed46-b3e9-4db2-9277-3cdcefc5f81a",
+								"cities"
+							]
+						},
+						"description": "Gets the cities of the requested state"
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/cities/:city-id/zip-locations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd8ea0a4-fe24-4e0d-bff5-50d88659be01",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"zip-code\", jsonData[0].zip_code);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/cities/6fe56f45-6223-4a91-8b19-f8357d4c0046/zip-locations",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"cities",
+								"6fe56f45-6223-4a91-8b19-f8357d4c0046",
+								"zip-locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/townships/:township-id/suburbs",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2ff9a2dd-54e0-4396-9a6a-cadf33a7199a",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/townships/03ecd98f-a199-43a1-b0fa-15e266ba880d/suburbs",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"townships",
+								"03ecd98f-a199-43a1-b0fa-15e266ba880d",
+								"suburbs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/countries/:country-code/zip-locations/:zip-code",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4a89126d-d36e-47e4-b9b8-a45b3847e75f",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/countries/MEX/zip-locations/38016",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"countries",
+								"MEX",
+								"zip-locations",
+								"38016"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/catalogs/countries/:country-code/identifier-types",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "172cd65c-23f8-418a-b7d6-27dece139bd7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/countries/AUT/identifier-types",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"countries",
+								"AUT",
+								"identifier-types"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Parties",
+			"item": [
+				{
+					"name": "/parties/personal/identifier-exist?identifier_type_id=f6535bfb-68c3-4368-8a21-8edc4fc77484&value=PAMN900130MHCRPR06",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal/identifier-exist?identifier_type_id=f6535bfb-68c3-4368-8a21-8edc4fc77484&value=PAMN900130MHCRPR06",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal",
+								"identifier-exist"
+							],
+							"query": [
+								{
+									"key": "identifier_type_id",
+									"value": "f6535bfb-68c3-4368-8a21-8edc4fc77484"
+								},
+								{
+									"key": "value",
+									"value": "PAMN900130MHCRPR06"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/:party-id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "dbdc3865-093b-440f-9253-63aab11caaa2",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}"
+							]
+						},
+						"description": "Get the infomation of the requested party"
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/personal/:party-id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d92cb44-3181-4a7e-a85a-fca8dddc7d05",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal/{{party-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal",
+								"{{party-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/virtual-addresses/:email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35cd0a0e-3a91-43db-ab53-fd034415229e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/virtual-addresses/{{user}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"virtual-addresses",
+								"{{user}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "address",
+			"item": [
+				{
+					"name": "/parties/:party-id/addresses/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8469517f-6142-47b7-ac75-276e6dab171e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/catalogs/states/34f8653d-fb39-4232-ac4a-8bafe9265f4f/cities",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"catalogs",
+								"states",
+								"34f8653d-fb39-4232-ac4a-8bafe9265f4f",
+								"cities"
+							]
+						},
+						"description": "Gets the cities of the requested state"
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/:partyId/addresses/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "864fbf50-da5e-4b11-8b3c-7f48e54df479",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"address-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/:partyId/addresses/:id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/addresses/{{address-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"addresses",
+								"{{address-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "countries",
+			"item": [
+				{
+					"name": "/parties/:party-id/countries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3c2e6b03-621c-47f9-8679-d749250c2cc0",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						},
+						"description": "Gets the countries of party"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "telephone",
+			"item": [
+				{
+					"name": "/parties/:partyId/telephones",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2cdd7bfa-abdd-466d-b524-b8b39450859c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"telephone-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/telephones",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"telephones"
+							]
+						},
+						"description": "Get the telephones of the requested party"
+					},
+					"response": []
+				},
+				{
+					"name": "/party/:partyId/telephones/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "839a715e-1d18-467b-a3a4-b47642520451",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/telephones/{{telephone-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"telephones",
+								"{{telephone-id}}"
+							]
+						},
+						"description": "Get the requested telephone information of party"
+					},
+					"response": []
+				}
+			],
+			"description": "Test functioncality to add telephones to party",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "virtual-address",
+			"item": [
+				{
+					"name": "/parties/:partyId/virtual-addresses/",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35cd0a0e-3a91-43db-ab53-fd034415229e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"virtual-address-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/virtual-addresses/",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses",
+								""
+							]
+						},
+						"description": "Gets the virtual addresses of requested party"
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/:partyId/virtual-addresses/:id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "35cd0a0e-3a91-43db-ab53-fd034415229e",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/virtual-addresses/{{virtual-address-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses",
+								"{{virtual-address-id}}"
+							]
+						},
+						"description": "Gets the virtual addresses of requested party"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "identifiers",
+			"item": [
+				{
+					"name": "/parties/:party-id/identifiers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fefba23d-040b-4fba-a850-dcfaa0f61fea",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/identifiers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"identifiers"
+							]
+						},
+						"description": "Gets the identifiers of party"
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/:partyId/identifiers/:identifier-types-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/identifiers/f6535bfb-68c3-4368-8a21-8edc4fc77484",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"identifiers",
+								"f6535bfb-68c3-4368-8a21-8edc4fc77484"
+							]
+						},
+						"description": "Updates the information of the requested identifier of party"
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/:partyId/identifiers/:identifier-types-id Copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/identifiers/339fc0e9-710f-4f62-9559-1c63730ae2e3",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"identifiers",
+								"339fc0e9-710f-4f62-9559-1c63730ae2e3"
+							]
+						},
+						"description": "Updates the information of the requested identifier of party"
+					},
+					"response": []
+				}
+			],
+			"description": "Actions to perform on identifiers of party",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "questionnaires",
+			"item": [
+				{
+					"name": "/questionnaires/:questionnaire-id/versions/:version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b402a4f1-fb10-4983-8a86-98b1b2c19386",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/questionnaires/ccb87491-cdd7-4e7c-a4f1-883c61d2944b/versions/1",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"questionnaires",
+								"ccb87491-cdd7-4e7c-a4f1-883c61d2944b",
+								"versions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/accounts/:account-id/questionnaire-answers/:questionnaire-version-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/accounts/{{account-id}}/questionnaire-answers/{{questionnaire-version-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"accounts",
+								"{{account-id}}",
+								"questionnaire-answers",
+								"{{questionnaire-version-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/contracts/:contract-id/questionnaire-answers/:questionnaire-version-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/questionnaire-answers/{{questionnaire-version-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"questionnaire-answers",
+								"{{questionnaire-version-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/:party-id/questionnaire-answers/:questionnaire-version-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "organization_id",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers/{{questionnaire-version-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers",
+								"{{questionnaire-version-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/contracts/:contract-id/accounts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1388b7c7-9a08-4f46-9b90-59b5dd1445e8",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetContract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b30b6a6-a4e4-4d8e-b3c8-6d004eae71fe",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"contract-id\", jsonData[0].id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/users/contracts/opening-platforms/gbmcom",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"users",
+								"contracts",
+								"opening-platforms",
+								"gbmcom"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "contracts",
+			"item": [
+				{
+					"name": "/contracts/:contract-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/contracts/:contract-id/parties",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/parties",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"parties"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "accounts",
+			"item": [
+				{
+					"name": "/contracts/:contract-id/accounts/:account-id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api-url}}/contracts/{{contract-id}}/accounts/{{account-id}}",
+							"host": [
+								"{{api-url}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts",
+								"{{account-id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Actions to perfom on accounts of contract",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Add Accounts",
+			"item": [
+				{
+					"name": "Create Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2452c91c-8efc-4821-9893-be379d26b00e",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"lrm-jwt\", jsonData.accessToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"cc6b68186bc84e40a68b76029dfc77ba\",\r\n  \"user\": \"{{user}}\",\r\n  \"password\": \"6bm$tAge\"\r\n}"
+						},
+						"url": {
+							"raw": "https://auth.gbm.com/api/v1/session/user",
+							"protocol": "https",
+							"host": [
+								"auth",
+								"gbm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"session",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- WM-Low",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"stage 1\", \n\t\"management_type_id\": \"d99fa510-6d95-4d5b-b205-10169f475aca\", \n\t\"management_type_template_key\": \"wealth\", \n\t\"opening_platform_type_key\": \"gbmcom\", \n\t\"account_profile_type\": \"balance\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- Wealth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"stage 1\", \n\t\"management_type_id\": \"d99fa510-6d95-4d5b-b205-10169f475aca\", \n\t\"management_type_template_key\": \"trading\", \n\t\"opening_platform_type_key\": \"gbmcom\", \n\t\"account_profile_type\": \"growth\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account- Comercialization Smart Cash",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SCash\",\n    \"management_type\": \"COMMERCIALIZATION\",\n    \"management_type_template\": \"smart_cash\",\n    \"opening_platform\": \"gbmcom\",\n    \"account_profile_type\": \"NOT_APPLICABLE\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account-PROFILE debt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"C1\", \n\t\"management_type\": \"LIMITED_DISCRETIONARY_BY_PROFILE\", \n\t\"management_type_template\": \"wealth\", \n\t\"opening_platform\": \"gbmcom\", \n\t\"account_profile_type\": \"debt\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Crear  Contrato Copy Copy",
+			"item": [
+				{
+					"name": "Create Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2452c91c-8efc-4821-9893-be379d26b00e",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"lrm-jwt\", jsonData.accessToken);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"clientId\": \"cc6b68186bc84e40a68b76029dfc77ba\",\r\n  \"user\": \"{{user}}\",\r\n  \"password\": \"6bm$tAge\"\r\n}"
+						},
+						"url": {
+							"raw": "https://auth.gbm.com/api/v1/session/user",
+							"protocol": "https",
+							"host": [
+								"auth",
+								"gbm",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"session",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Party Add Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3d92cb44-3181-4a7e-a85a-fca8dddc7d05",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"party-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "{{organization-id}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_of_birth\": \"MEX\",\r\n  \"date_of_birth\": \"{{fecha}}\",\r\n    \"first_name\": \"{{nombre}}\" ,\r\n  \"gender\": \"MALE\",\r\n  \"identifier\": {\r\n    \"identifier_type_id\": \"f6535bfb-68c3-4368-8a21-8edc4fc77484\",\r\n    \"value\": \"{{registrocurp}}\"\r\n  },\r\n  \"immigration_status\": \"NonImmigrant\",\r\n  \"marital_status\": \"MARRIED\",\r\n  \"first_last_name\": \"{{firstlastname}}\",\r\n \"second_last_name\": \"{{secondtlastname2}}\",\r\n  \"state_of_birth\": \"DD0E3953-518C-4323-89E0-4222451F2D3E\"\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Nationality",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"nationality\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Residence",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"residence\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of Citizenship",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"citizenship\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Country of tributacion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "68bb43d2-cd14-4895-bf11-ceedd3b92b63",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"country_code\": \"MEX\",\r\n  \"country_type\": \"TAXATION\",\r\n  \"is_main_country\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/countries",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"countries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Residential_Fiscal Address",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b033ba2e-70a2-4cbb-995a-d465c9758b03",
+								"exec": [
+									"pm.test(\"Status code is 21\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "{{organization-id}}"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"address_type\": \"RESIDENTIAL_AND_FISCAL\",\n  \"inside_number\": \"1234567891011\",\n  \"outside_number\": \"31\",\n  \"street_name\": \"Revolucion\",\n  \"zip_location_id\": \"{{zipcodeid}}\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email personal",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": true,\r\n    \"value\": \"{{user}}\",\r\n     \"virtual_address_type\": \"email_personal\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "72e4e51c-f388-48bc-a78b-73bae02358b3",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_main\": false,\r\n    \"value\": \"{{user}}\",\r\n     \"virtual_address_type\": \"email_office\",\r\n     \"is_validated\":true\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/parties/{{party-id}}/virtual-addresses",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"parties",
+								"{{party-id}}",
+								"virtual-addresses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Telephone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b8850bf0-421e-4b07-90a6-37d2bded0add",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"telephone-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"area_code\": \"722\",\r\n  \"country_code\": \"MEX\",\r\n  \"extension\": \"4813\",\r\n  \"telephone_type\": \"office\",\r\n  \"value\": \"12345678\"\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/telephones",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"telephones"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add RFC",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "200e65e3-b179-449f-8553-71df8808c3c1",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"identifier_type_id\": \"339fc0e9-710f-4f62-9559-1c63730ae2e3\",\n\t\"value\": \"{{registrorfc}}\"\n}\n\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/identifiers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"identifiers"
+							]
+						},
+						"description": "Add a new identifier to party"
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/{partyId}/questionnaire-answers KYC Depositos Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"E9B0BB6E-859E-4857-9EE0-1F6ECE4F5312\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\":\"CLIENT_KYC\",\r\n        \"questionnaire_answers\":[\r\n{\r\n  \"question_id\":\"93a2f5c1-96eb-4a7f-8aac-4ed47ed01634\",\r\n  \"answer_id\":\"{{kyc}}\",\r\n  \"answer_response\":null\r\n},\r\n{\r\n  \"question_id\":\"c615ca6d-20c3-4f39-aed6-025f4bf6a168\",\r\n  \"answer_id\":\"{{kyc2}}\",\r\n  \"answer_response\":null\r\n}\r\n]\r\n}\r\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/{partyId}/questionnaire-answers Activity Economic Otros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"b78a2c6b-d644-400b-8237-3c857b7f77d8\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\": \"CLIENT_ECONOMIC_ACTIVITY\",\r\n        \"questionnaire_answers\": [\r\n        \t   {\r\n            \t\"answer_type\": \"text_box\",\r\n               \t\"question_id\" : \"0B7D1318-B84C-4C4E-9C88-0D0D8ED1DBAF\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"{{MontoMensual}}\"\r\n            },\r\n            {\t\r\n            \t\"required\": true,\r\n                \"answer_type\": \"combo\",\r\n                \"question_id\" : \"01D60C98-D2F3-4BDE-88A6-B259A19303EE\",\r\n                \"answer_id\": \"64961517-7A9F-486B-8ABC-0BC5DF0B4505\",\r\n                \"answer_response\" : \"Empleado\"\r\n            },\r\n            {\r\n            \r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n            \t\"question_id\" :\"1AB52A35-7658-41A0-93D0-A7D54113B402\" ,\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"Sin City\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"combo\",\r\n            \t\"question_id\" :\"EF148196-FA55-49B8-B85D-959C8512F614\" ,\r\n                \"answer_id\": \"{{sector}}\",\r\n                \"answer_response\" : \"{{respsector}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"combo\",\r\n               \t\"question_id\" : \"DE6BFA26-E890-4617-BC82-2897EA6A1F2F\",\r\n                \"answer_id\": \"{{giro}}\",\r\n                \"answer_response\" : \"{{respgiro}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"multiple_option\",\r\n               \t\"question_id\" : \"30D02E24-81D8-474F-B716-777E26D5E75B\",\r\n                \"answer_id\": \"{{rango}}\",\r\n                \"answer_response\" : \"{{resprango}}\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"text_box\",\r\n               \t\"question_id\" : \"261F62BD-2217-46C8-877E-5699793636E8\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_response\" : \"2\"\r\n            },\r\n            {\r\n            \t\"answer_type\": \"multiple_option\",\r\n               \t\"question_id\" : \"51C90DF0-3C92-41B0-9FAA-B2185D94687D\",\r\n                \"answer_id\": \"0F00E36D-AE65-4438-9140-42C6B4B99EF7\",\r\n                \"answer_response\" : \"Arrendamiento de inmuebles\"\r\n            },\r\n            {\r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n\t\t\t\t\"question_id\": \"9A7C4DCF-DF53-4B67-A353-0DA6E1FF8F5D\",\r\n\t\t\t\t\"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n\t\t\t\t\"answer_response\" : \"Pruebas\"\r\n\t\t\t},\r\n\t\t\t{\r\n\t\t\t\t\r\n\t\t\t\t\"answer_type\": \"text_box\",\r\n\t\t\t\t\"question_id\": \"9A7C4DCF-DF53-4B67-A353-0DA6E1FF8F5D\",\r\n\t\t\t\t\"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n\t\t\t\t\"answer_response\" : \"Prueba\"\r\n\t}\r\n\t\t\t]\r\n    }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/parties/{partyId}/questionnaire-answers PEPS Yo Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9040f506-4a76-4b70-812f-d1cbca6d109b",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"questionnaire-version-id\", jsonData.questionnaire_version_id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "organization_id",
+								"type": "text",
+								"value": "e4c82a64-9bac-45a6-94ab-0af6352f01cb"
+							},
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"questionnaire_version_id\" : \"9F62D213-981A-4705-8F4A-84207084A3AB\",\r\n    \"questionnaire\" : {\r\n        \"version\" : \"1\",\r\n        \"questionnaire_type\": \"CLIENT_PEPS\",\r\n        \"questionnaire_answers\": [\r\n            {\r\n            \t\"required\": true,\r\n\t\t\t\t\"answer_type\": \"combo\",\r\n                \"question_id\" : \"602A0966-90EC-45E6-B46E-8805D258D8B6\",\r\n                \"answer_id\": \"FEFF7411-7154-4D60-AF1D-AB414EF54853\",\r\n                \"answer_response\" : \"Yo\"\r\n\t\t\t},\r\n            {\r\n            \t\"question_id\" : \"0741AA44-7AE6-470F-B56E-C88D104EB38F\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_type\": \"text_box\",\r\n                \"answer_response\" : \"La Coqueta\"\r\n            },\r\n            {\r\n            \t\"question_id\" : \"53BAB321-21FF-47FC-A7C6-1761A714E05E\",\r\n                \"answer_id\": \"00000000-0000-0000-0000-000000000000\",\r\n                \"answer_type\": \"text_box\",\r\n                \"answer_response\" : \"Director De Asuntos Irrelevantes\"\r\n            }\r\n              \r\n\t\t\t]\r\n    }\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/{{party-id}}/questionnaire-answers",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"{{party-id}}",
+								"questionnaire-answers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "profile-type",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b88910f3-1cde-461d-8ed8-bc70ba17c97f",
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"profile_type\": \"LOW\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/parties/personal/{{party-id}}/profile-types",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"parties",
+								"personal",
+								"{{party-id}}",
+								"profile-types"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Contract",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0f1f2880-3026-4306-98a2-7fbe6c392486",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"contract-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\topening_platform_type_key: \"gbmcom\",\n\tcontract_template_key: \"gbmcom\",\n\tparty_id: \"{{party-id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- Trading",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"stage 1\", \n\t\"management_type_id\": \"9E95828E-7116-46EF-9102-87213947DD03\", \n\t\"management_type_template_key\": \"wealth\", \n\t\"opening_platform_type_key\": \"gbmcom\", \n\t\"account_profile_type\": \"growth\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- WM-Low",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"stage 1\", \n\t\"management_type_id\": \"d99fa510-6d95-4d5b-b205-10169f475aca\", \n\t\"management_type_template_key\": \"wealth\", \n\t\"opening_platform_type_key\": \"gbmcom\", \n\t\"account_profile_type\": \"balance\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- Wealth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"name\": \"stage 1\", \n\t\"management_type_id\": \"d99fa510-6d95-4d5b-b205-10169f475aca\", \n\t\"management_type_template_key\": \"trading\", \n\t\"opening_platform_type_key\": \"gbmcom\", \n\t\"account_profile_type\": \"growth\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Account- Smart Cash",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "34afeac7-f060-4faf-a759-d2c342db0d3e",
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"account-id\", jsonData.id);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"SCash\",\n    \"management_type\": \"LIMITED_DISCRETIONARY_BY_PROFILE\",\n    \"management_type_template\": \"wealth\",\n    \"opening_platform\": \"gbmcom\",\n    \"account_profile_type\": \"debt\"\n}"
+						},
+						"url": {
+							"raw": "{{lrm-stg}}/v2/contracts/{{contract-id}}/accounts",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"v2",
+								"contracts",
+								"{{contract-id}}",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Firmar Contrato",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{lrm-jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/sign",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"sign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Party",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d561c127-7401-4972-b01e-73bc716d23ba",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"pm.environment.set(\"party-id\", jsonData.id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/users/party",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"users",
+								"party"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send to HB Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{lrm-jwt}}"
+							}
+						],
+						"url": {
+							"raw": "{{lrm-stg}}/contracts/{{contract-id}}/accounts/{{account-id}}/base-platform",
+							"host": [
+								"{{lrm-stg}}"
+							],
+							"path": [
+								"contracts",
+								"{{contract-id}}",
+								"accounts",
+								"{{account-id}}",
+								"base-platform"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
