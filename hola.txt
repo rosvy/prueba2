@@ -1,2 +1,6 @@
-hola mundo!
-que tal esto es una prueba.
+{
+	"info": {
+		"_postman_id": "182b44f6-6cd8",
+		"name": "Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2/collection.json"
+	},
